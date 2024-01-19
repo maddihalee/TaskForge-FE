@@ -6,7 +6,6 @@ import { registerUser } from '../utils/auth'; // Update with path to registerUse
 
 function RegisterForm({ user, onUpdate }) {
   const [formData, setFormData] = useState({
-    bio: '',
     firebaseUid: user.uid,
   });
 
