@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Button } from 'react-bootstrap';
 import { checkUser } from '../utils/auth';
 import RegisterForm from '../components/RegisterForm';
 import { useAuth } from '../utils/context/authContext';
@@ -23,11 +25,29 @@ function Home() {
     <>
       {authUser?.firebaseUid === user?.uid ? (
         <>
-          {tasks.map((task) => (
-            <TaskCard key={task.id} taskObj={task} />
-          ))}
+          <div>
+            <Link href="/create" passHref>
+              <Button
+                size="md"
+                className="btn-m"
+                style={{
+                  backgroundColor: 'transparent',
+                  color: 'black',
+                  border: 'none',
+                  fontWeight: 600,
+                }}
+              >
+                Create a Task
+              </Button>
+            </Link>
+            {tasks.map((task) => (
+              <TaskCard key={task.id} taskObj={task} />
+            ))}
+          </div>
         </>
-      ) : (<RegisterForm user={user} onUpdate={onUpdate} />)}
+      ) : (
+        <RegisterForm user={user} onUpdate={onUpdate} />
+      )}
     </>
   );
 }
