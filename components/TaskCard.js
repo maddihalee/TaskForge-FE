@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function TaskCard({ taskObj }) {
   return (
-    <Card>
+    <Card className="card">
       <Card.Header as="h5">{taskObj?.title}</Card.Header>
       <Card.Body>
         <Card.Text>
