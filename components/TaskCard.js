@@ -8,6 +8,7 @@ export default function TaskCard({ taskObj }) {
       <Card.Body>
         <Card.Text>
           {taskObj?.description}
+          {taskObj?.due}
         </Card.Text>
         <Button variant="primary">Delete</Button>
       </Card.Body>
@@ -20,7 +21,7 @@ TaskCard.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     description: PropTypes.string,
-    dueDate: PropTypes.instanceOf(Date),
+    due: PropTypes.string,
     status: PropTypes.bool,
     userId: PropTypes.number,
   }).isRequired,

@@ -17,8 +17,8 @@ function Home() {
   };
 
   useEffect(() => {
-    checkUser(user.uid).then((data) => setAuthUser(data[0]));
     getTasks().then(setTasks);
+    checkUser(user.uid).then((data) => setAuthUser(data[0]));
   }, []);
 
   return (
