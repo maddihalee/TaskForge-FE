@@ -20,6 +20,7 @@ export default function CreateForm({ taskObj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [priorities, setPriorities] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const [pickedDate, setPickedDate] = useState();
   const router = useRouter();
   const { user } = useAuth();
 
@@ -28,7 +29,9 @@ export default function CreateForm({ taskObj }) {
     if (taskObj.id) {
       updateTask(taskObj).then(router.push('/'));
     } else {
-      const payload = { ...formInput, status: false, userId: user[0].id };
+      const payload = {
+        ...formInput, status: false, userId: user[0].id, due: pickedDate,
+      };
       createTask(payload).then(router.push('/'));
     }
   };
@@ -39,6 +42,10 @@ export default function CreateForm({ taskObj }) {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const handleDateSelect = (dateTime) => {
+    setPickedDate(dateTime);
   };
 
   useEffect(() => {
@@ -94,7 +101,12 @@ export default function CreateForm({ taskObj }) {
         </Form.Select>
       </Form.Group>
 
-      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+      When should this task be completed by?
+      <DatePicker
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        onSelect={handleDateSelect}
+      />
 
       {/* SUBMIT BUTTON  */}
       <Button type="submit">{taskObj?.id ? 'Update' : 'Create'} Task</Button>
