@@ -1,7 +1,25 @@
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import CheckBox from './Checkbox';
+import { updateTask } from '../api/tasksData';
 
 export default function TaskCard({ taskObj, priorityObj }) {
+  const [taskStatus, setTaskStatus] = useState(taskObj.status);
+
+  const handleClick = () => {
+    const newStatus = !taskStatus;
+    setTaskStatus(newStatus);
+    updateTask({ ...taskObj, status: newStatus })
+      .then((response) => {
+        if (response.ok) {
+          console.warn('Task status updated successfully.');
+        }
+      });
+  };
+
+  console.warn(taskObj);
+
   return (
     <Card className="card">
       <Card.Header as="h5">{taskObj?.title}</Card.Header>
@@ -9,12 +27,12 @@ export default function TaskCard({ taskObj, priorityObj }) {
         <Card.Text>
           {taskObj?.description}
           <br />
-          {taskObj?.due}
+          Due: {taskObj?.due}
           <br />
           {priorityObj?.name}
         </Card.Text>
-        <Button variant="primary">Delete</Button>
       </Card.Body>
+      <CheckBox onClick={handleClick} checked={taskStatus} />
     </Card>
   );
 }
