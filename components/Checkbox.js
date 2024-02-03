@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-export default function CheckBox({ onClick, checked }) {
+export default function CheckBox({ onChange, checked }) {
   return (
     <Form>
       {['checkbox'].map((type) => (
@@ -11,7 +11,7 @@ export default function CheckBox({ onClick, checked }) {
             id={`default-${type}`}
             label="Completed"
             checked={checked}
-            onClick={onClick}
+            onChange={onChange}
           />
         </div>
       ))}
@@ -20,6 +20,6 @@ export default function CheckBox({ onClick, checked }) {
 }
 
 CheckBox.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   checked: PropTypes.bool.isRequired,
 };
