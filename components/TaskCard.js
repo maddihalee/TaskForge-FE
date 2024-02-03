@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import CheckBox from './Checkbox';
 import { updateTask } from '../api/tasksData';
 
-export default function TaskCard({ taskObj, priorityObj }) {
-  const [taskStatus, setTaskStatus] = useState(taskObj.status);
+export default function TaskCard({ taskObj, priorityObj, onTaskComplete }) {
+  const [taskStatus, setTaskStatus] = useState(taskObj.status || false);
 
   const handleClick = () => {
     const newStatus = !taskStatus;
@@ -14,6 +14,7 @@ export default function TaskCard({ taskObj, priorityObj }) {
       .then((response) => {
         if (response.ok) {
           console.warn('Task status updated successfully.');
+          onTaskComplete(taskObj);
         }
       });
   };
@@ -32,7 +33,7 @@ export default function TaskCard({ taskObj, priorityObj }) {
           {priorityObj?.name}
         </Card.Text>
       </Card.Body>
-      <CheckBox onClick={handleClick} checked={taskStatus} />
+      <CheckBox onChange={handleClick} checked={taskStatus} />
     </Card>
   );
 }
@@ -50,4 +51,5 @@ TaskCard.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
   }).isRequired,
+  onTaskComplete: PropTypes.func.isRequired,
 };
