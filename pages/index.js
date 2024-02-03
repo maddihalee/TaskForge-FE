@@ -18,11 +18,16 @@ function Home() {
   };
 
   const handleTaskComplete = (completedTask) => {
-    // Remove the completed task from the list of active tasks
-    const updatedTasks = tasks.filter((task) => task.id !== completedTask.id);
-    setTasks(updatedTasks);
-    // Add the completed task to the list of completed tasks
-    setCompletedTasks((prevCompletedTasks) => [...prevCompletedTasks, completedTask]);
+    const taskIndex = completedTasks.findIndex((task) => task.id === completedTask.id);
+    if (taskIndex !== -1) {
+      const updatedCompletedTasks = completedTasks.filter((task) => task.id !== completedTask.id);
+      setCompletedTasks(updatedCompletedTasks);
+      setTasks((prevTasks) => [...prevTasks, completedTask]);
+    } else {
+      const updatedTasks = tasks.filter((task) => task.id !== completedTask.id);
+      setTasks(updatedTasks);
+      setCompletedTasks((prevCompletedTasks) => [...prevCompletedTasks, completedTask]);
+    }
   };
 
   useEffect(() => {
